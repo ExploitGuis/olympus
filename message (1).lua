@@ -2473,7 +2473,7 @@ SigmaTab:CreateSection("Game")
 SigmaTab:CreateLabel("Nothing here yet..", 18638286567)
 
 GameTab:CreateButton({
-   Name = "Telekensis Glitch ",
+   Name = "Telekensis Glitch (Must Be Hecate)",
    Callback = function()
    local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -2571,5 +2571,6 @@ EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
