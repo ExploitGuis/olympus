@@ -2474,6 +2474,96 @@ SigmaTab:CreateLabel("Nothing here yet..", 18638286567)
 
 GameTab:CreateLabel("It's 4 in the morning and i'm too lazy to add stuff here rn ;v", 18638286567)
 
+GameTab:CreateButton({
+   Name = "Teleknesis Glitch Troll (Must Be Hecate)",
+   Callback = function()
+   ocal Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local localPlayer = Players.LocalPlayer
+
+local function getNearbyPlayers(radius)
+    local nearbyPlayers = {}
+    local myChar = localPlayer.Character
+    if not myChar or not myChar:FindFirstChild("HumanoidRootPart") then
+        return nearbyPlayers
+    end
+    local myPosition = myChar.HumanoidRootPart.Position
+
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local distance = (player.Character.HumanoidRootPart.Position - myPosition).magnitude
+            if distance <= radius then
+                table.insert(nearbyPlayers, player)
+            end
+        end
+    end
+    return nearbyPlayers
+end
+
+local function addGlowEffect(player)
+    local character = player.Character
+    if character and character:FindFirstChild("Head") then
+        local pointLight = Instance.new("PointLight")
+        pointLight.Parent = character.Head
+        pointLight.Color = Color3.fromRGB(255, 105, 180)
+        pointLight.Range = 10
+        pointLight.Brightness = 2
+        pointLight.Enabled = true
+        return pointLight
+    end
+end
+
+local function removeGlowEffect(player, pointLight)
+    if pointLight then
+        pointLight:Destroy()
+    end
+end
+
+local radius = 20
+local currentTarget = nil
+local glowEffects = {}
+
+while true do
+    wait(1)
+    local nearbyPlayers = getNearbyPlayers(radius)
+
+    for player, light in pairs(glowEffects) do
+        if not table.find(nearbyPlayers, player) then
+            removeGlowEffect(player, light)
+            glowEffects[player] = nil
+        end
+    end
+
+    for _, player in ipairs(nearbyPlayers) do
+        if not glowEffects[player] then
+            local glow = addGlowEffect(player)
+            glowEffects[player] = glow
+        end
+    end
+
+    if currentTarget then
+        for i, player in ipairs(nearbyPlayers) do
+            if player == currentTarget then
+                table.remove(nearbyPlayers, i)
+                break
+            end
+        end
+    end
+
+    if #nearbyPlayers > 0 then
+        local targetPlayer = nearbyPlayers[math.random(1, #nearbyPlayers)]
+        currentTarget = targetPlayer
+        local args = {
+            "Telekinesis",
+            localPlayer.Character,
+            targetPlayer.Character
+        }
+        ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
+    end
+end
+   end,
+})
+
 -- EventTab Sections
 EvntTab:CreateSection("Info")
 EvntTab:CreateParagraph({Title = "Olympus Script Developers🛠️", Content = "Kermisha & MotherOfGrass & Moon"})
@@ -2481,4 +2571,5 @@ EvntTab:CreateParagraph({Title = "Support Discord DMS💬", Content = "kermishau
 EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "Release!"})
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
+
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
