@@ -2711,7 +2711,7 @@ GameTab:CreateButton({
         localChar = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
         hrp = localChar:WaitForChild("HumanoidRootPart")
         hrp.CFrame = savedCFrame
-        wait(3)
+        wait(0.7)
         local argsVortex = {
             "Water Vortex",
             localChar
@@ -2869,6 +2869,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
