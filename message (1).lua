@@ -2474,6 +2474,81 @@ SigmaTab:CreateLabel("Nothing here yet..", 18638286567)
 
 GameTab:CreateLabel("Enjoy New Update!", 18638286567)
 
+GameTab:CreateToggle({
+    Name = "AutoKill Server (Hera)",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        _G.AutoKill = Value
+        if Value then
+            local Players = game:GetService("Players")
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local LocalPlayer = Players.LocalPlayer
+
+            function getRandomPlayer()
+                local plrs = Players:GetPlayers()
+                if #plrs > 1 then
+                    local randomPlr = plrs[math.random(1, #plrs)]
+                    if randomPlr ~= LocalPlayer then
+                        return randomPlr
+                    end
+                end
+                return nil
+            end
+
+            task.spawn(function()
+                while _G.AutoKill do
+                    wait(1)
+
+                    local args = {
+                        "Occupy",
+                        "Hera",
+                        {
+                            Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                            SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                            AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                            IconFrame      = "rbxassetid://109487525162601",
+                            PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                            Gamepass       = false,
+                            GamepassId     = 1062037243,
+                            Name           = "Hera"
+                        }
+                    }
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args))
+
+                    local target = getRandomPlayer()
+                    if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+                        LocalPlayer.Character:MoveTo(target.Character.HumanoidRootPart.Position)
+
+                        local args = {
+                            "Telekinetic Combo",
+                            LocalPlayer.Character,
+                            target.Character
+                        }
+                        ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
+                    end
+
+                    local args = {
+                        "Occupy",
+                        "Iris",
+                        {
+                            Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                            SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                            AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                            IconFrame      = "rbxassetid://109487525162601",
+                            PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                            Gamepass       = false,
+                            GamepassId     = 1062037243,
+                            Name           = "Iris"
+                        }
+                    }
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args))
+                end
+            end)
+        end
+    end,
+})
+
 
 GameTab:CreateToggle({
    Name = "Mass Earthquake (Hera)",
@@ -2560,6 +2635,7 @@ EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Te
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
