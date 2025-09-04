@@ -3,7 +3,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
     Name = "|   Olympus DEV GUI",
     Icon = 134461174841260,
-    LoadingTitle = "[UPDATE OUT NOW] Olympus",
+    LoadingTitle = "Olympus TEST GUI",
     LoadingSubtitle = "✰ ✰ ✰ Loading Exploits.. ✰ ✰ ✰",
     ConfigurationSaving = {
         Enabled = true,
@@ -2492,4 +2492,5 @@ EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "Release!"})
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
