@@ -2666,7 +2666,7 @@ local RunService = game:GetService("RunService")
 local RunService = game:GetService("RunService")
 
 GameTab:CreateButton({
-    Name = "Vortex (Poseidon)",
+    Name = "Voertex (Poseidon)",
     Callback = function()
         local Players = game:GetService("Players")
         local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -2674,13 +2674,13 @@ GameTab:CreateButton({
 
         local localChar = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
         local hrp = localChar:WaitForChild("HumanoidRootPart")
-        local originalCFrame = hrp.CFrame
+        local savedCFrame = hrp.CFrame
 
         local args1 = {
             "Occupy",
             "Iris",
             {
-                Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                Description = "placeholder",
                 SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
                 AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
                 IconFrame      = "rbxassetid://109487525162601",
@@ -2696,7 +2696,7 @@ GameTab:CreateButton({
             "Occupy",
             "Poseidon",
             {
-                Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                Description = "placeholder",
                 SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
                 AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
                 IconFrame      = "rbxassetid://109487525162601",
@@ -2710,7 +2710,7 @@ GameTab:CreateButton({
 
         localChar = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
         hrp = localChar:WaitForChild("HumanoidRootPart")
-        hrp.CFrame = originalCFrame
+        hrp.CFrame = savedCFrame
 
         local argsVortex = {
             "Water Vortex",
@@ -2869,6 +2869,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
