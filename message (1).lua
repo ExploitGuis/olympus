@@ -2518,6 +2518,49 @@ GameTab:CreateToggle({
 })
 
 GameTab:CreateToggle({
+    Name = "SpamChat2",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        _G.SpamChat2 = Value
+
+        if Value then
+            task.spawn(function()
+                local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                local TextChatService = game:GetService("TextChatService")
+
+                local function sendMessage(msg)
+                    local ok = false
+                    if TextChatService and TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+                        local general = TextChatService:FindFirstChild("TextChannels") and TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+                        if general then
+                            local success = pcall(function()
+                                general:SendAsync(msg)
+                            end)
+                            if success then ok = true end
+                        end
+                    end
+                    if not ok then
+                        local evts = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+                        if evts and evts:FindFirstChild("SayMessageRequest") then
+                            evts.SayMessageRequest:FireServer(msg, "All")
+                        end
+                    end
+                end
+
+                local messages = { "KAWAII", "AWW KAWAII YA", "NA ARIGIRA" }
+
+                while _G.SpamChat2 do
+                    local msg = messages[math.random(1, #messages)]
+                    sendMessage(msg)
+                    task.wait(0.05)
+                end
+            end)
+        end
+    end,
+})
+
+GameTab:CreateToggle({
     Name = "Telekinesis Glitch (Hecate)",
     CurrentValue = false,
     Flag = "Toggle1",
@@ -2827,5 +2870,6 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
