@@ -2548,7 +2548,7 @@ GameTab:CreateToggle({
                     end
                 end
 
-                local messages = { "KAWAII", "AWW KAWAII YA", "NA ARIGIRA" }
+                local messages = { "LUKAS I DIG IN U", "LUKASIMDDIGGININU", "LUKASMAMMI" }
 
                 while _G.SpamChat2 do
                     local msg = messages[math.random(1, #messages)]
@@ -2870,6 +2870,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
