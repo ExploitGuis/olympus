@@ -2603,7 +2603,7 @@ GameTab:CreateToggle({
                     }
                     ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
 
-                    wait(2)
+                    wait(0)
 
                     local occupyArgs1 = {
                         "Occupy",
@@ -2621,7 +2621,7 @@ GameTab:CreateToggle({
                     }
                     ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs1))
 
-                    wait(2)
+                    wait(0)
 
                     local occupyArgs2 = {
                         "Occupy",
@@ -2639,7 +2639,7 @@ GameTab:CreateToggle({
                     }
                     ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs2))
 
-                    wait(2)
+                    wait(0)
                 end
             end
         end
@@ -2660,6 +2660,7 @@ EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
