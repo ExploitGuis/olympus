@@ -2787,7 +2787,8 @@ local OWNER_IDS = {
     9405467400,
 }
 
-local OWNER_TAG = "<font color='#800080'>{Owner}</font> "
+local OWNER_TAG = "{Owner}"
+local OWNER_COLOR = Color3.fromRGB(128, 0, 128)
 
 local function isOwner(userId)
     for _, id in ipairs(OWNER_IDS) do
@@ -2799,24 +2800,32 @@ local function isOwner(userId)
 end
 
 local ChatEvents = ReplicatedStorage:WaitForChild("DefaultChatSystemChatEvents")
-local OnMessageDoneFiltering = ChatEvents:WaitForChild("OnMessageDoneFiltering")
+local AddTag = ChatEvents:WaitForChild("OnNewMessage") or ChatEvents:WaitForChild("OnMessageDoneFiltering")
 
-OnMessageDoneFiltering.OnClientEvent:Connect(function(data)
-    if isOwner(data.FromSpeakerUserId) then
-        game.StarterGui:SetCore("ChatMakeSystemMessage", {
-            Text = OWNER_TAG .. data.FromSpeaker .. ": " .. data.Message,
-            Color = Color3.fromRGB(255,255,255),
-            Font = Enum.Font.SourceSans,
-            TextSize = 18
-        })
+local function applyTag(player)
+    if isOwner(player.UserId) then
+        local speaker = require(Players:WaitForChild("Chat"):WaitForChild("ClientChatModules"):WaitForChild("ChatSettings"))
+        local speakerName = player.Name
+        local speakerObj = speaker[speakerName]
+        if speakerObj then
+            speakerObj.ExtraData = speakerObj.ExtraData or {}
+            speakerObj.ExtraData.Tags = speakerObj.ExtraData.Tags or {}
+            table.insert(speakerObj.ExtraData.Tags, {
+                TagText = OWNER_TAG,
+                TagColor = OWNER_COLOR
+            })
+        end
     end
+end
+
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        applyTag(player)
+    end)
 end)
 
-
-
-
-
-
-
+for _, player in ipairs(Players:GetPlayers()) do
+    applyTag(player)
+end
 
 
