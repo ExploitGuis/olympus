@@ -2782,18 +2782,54 @@ EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If y
 
 
 
+local Players = game:GetService("Players")
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local ChatService = game:GetService("Chat")
 
+local OWNER_IDS = {
+    9405490061,
+    9405467400,
+}
 
+local OWNER_TAG = "{Owner}"
+local OWNER_COLOR = Color3.fromRGB(128, 0, 128)
 
+local function isOwner(player)
+    for _, id in ipairs(OWNER_IDS) do
+        if player.UserId == id then
+            return true
+        end
+    end
+    return false
+end
 
+Players.PlayerAdded:Connect(function(player)
+    if isOwner(player) then
+        player.Chatted:Connect(function(message)
+            local prefix = OWNER_TAG
+            local coloredPrefix = string.format('<font color="#%02X%02X%02X">%s</font> ', 
+                math.floor(OWNER_COLOR.R * 255), 
+                math.floor(OWNER_COLOR.G * 255), 
+                math.floor(OWNER_COLOR.B * 255), 
+                prefix)
+            ChatService:Chat(player.Character.Head, coloredPrefix .. message, Enum.ChatColor.White)
+        end)
+    end
+end)
 
-
-
-
-
-
-
-
+for _, player in ipairs(Players:GetPlayers()) do
+    if isOwner(player) then
+        player.Chatted:Connect(function(message)
+            local prefix = OWNER_TAG
+            local coloredPrefix = string.format('<font color="#%02X%02X%02X">%s</font> ', 
+                math.floor(OWNER_COLOR.R * 255), 
+                math.floor(OWNER_COLOR.G * 255), 
+                math.floor(OWNER_COLOR.B * 255), 
+                prefix)
+            ChatService:Chat(player.Character.Head, coloredPrefix .. message, Enum.ChatColor.White)
+        end)
+    end
+end
 
 
 
