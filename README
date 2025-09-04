@@ -1,1 +1,2 @@
 Message (1).Lua is the MAIN GUI, Please make sure to test all scripts in "Ownerguiasd" - Key: xeVWJhJNqx2xKGccmJjf, Before adding them to the main gui.
+Test gui script: loadstring(game:HttpGet("https://raw.githubusercontent.com/ExploitGuis/olympus/main/Ownerguiasd.lua"))()
