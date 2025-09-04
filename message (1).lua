@@ -2472,6 +2472,8 @@ SigmaTab:CreateSection("Game")
 
 SigmaTab:CreateLabel("Nothing here yet..", 18638286567)
 
+GameTab:CreateLabel("Enjoy New Update!", 18638286567)
+
 GameTab:CreateToggle({
    Name = "Telekinesis Glitch (Must Be Hecate)",
    CurrentValue = false,
@@ -2659,6 +2661,7 @@ EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
