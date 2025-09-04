@@ -2657,8 +2657,10 @@ GameTab:CreateToggle({
     end,
 })
 
+local RunService = game:GetService("RunService")
+
 GameTab:CreateToggle({
-    Name = "AutoKill (WIP94)",
+    Name = "AutoKill (WISDAP)",
     CurrentValue = false,
     Flag = "Toggle1",
     Callback = function(Value)
@@ -2690,14 +2692,16 @@ GameTab:CreateToggle({
                         local localChar = Players.LocalPlayer.Character
                         if localChar and localChar:FindFirstChild("HumanoidRootPart") then
                             localChar.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
+                            repeat
+                                RunService.Heartbeat:Wait()
+                            until (localChar.HumanoidRootPart.Position - randomPlayer.Character.HumanoidRootPart.Position).Magnitude < 2
+                            local args2 = {
+                                "Water Vortex",
+                                localChar
+                            }
+                            ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args2))
                         end
                     end
-
-                    local args2 = {
-                        "Water Vortex",
-                        Players.LocalPlayer.Character
-                    }
-                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args2))
 
                     local args3 = {
                         "Occupy",
@@ -2719,6 +2723,7 @@ GameTab:CreateToggle({
         end
     end
 })
+
 
 
 GameTab:CreateToggle({
@@ -2858,6 +2863,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
