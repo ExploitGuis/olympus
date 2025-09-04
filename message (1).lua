@@ -2658,7 +2658,7 @@ GameTab:CreateToggle({
 })
 
 GameTab:CreateToggle({
-    Name = "AutoKill",
+    Name = "AutoKill (WIP)",
     CurrentValue = false,
     Flag = "Toggle1",
     Callback = function(Value)
@@ -2863,6 +2863,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
