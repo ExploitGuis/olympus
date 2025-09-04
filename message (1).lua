@@ -2655,11 +2655,12 @@ GameTab:CreateToggle({
 EvntTab:CreateSection("Info")
 EvntTab:CreateParagraph({Title = "Olympus Script Developers🛠️", Content = "Kermisha & MotherOfGrass & Moon"})
 EvntTab:CreateParagraph({Title = "Support Discord DMS💬", Content = "kermishaurfavx & grassmother & themoonandsunreuinite"})
-EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "Release!"})
+EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Telekenisis Glitch, Mass Earthquake"})
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
