@@ -2599,7 +2599,7 @@ GameTab:CreateToggle({
 
                 if randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     localPlayer.Character:SetPrimaryPartCFrame(randomPlayer.Character.HumanoidRootPart.CFrame)
-
+                    wait(2)
                     local args = {
                         "Terrakinetic Earthquake",
                         localPlayer.Character
@@ -2746,6 +2746,7 @@ EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Te
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
