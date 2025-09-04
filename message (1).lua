@@ -2658,7 +2658,7 @@ GameTab:CreateToggle({
 })
 
 GameTab:CreateToggle({
-    Name = "AutoKill (opIP)",
+    Name = "AutoKill (WIP94)",
     CurrentValue = false,
     Flag = "Toggle1",
     Callback = function(Value)
@@ -2683,7 +2683,7 @@ GameTab:CreateToggle({
                         }
                     }
                     ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args1))
-                    wait(2)
+
                     local allPlayers = Players:GetPlayers()
                     local randomPlayer = allPlayers[math.random(1, #allPlayers)]
                     if randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart") then
@@ -2692,6 +2692,7 @@ GameTab:CreateToggle({
                             localChar.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
                         end
                     end
+
                     local args2 = {
                         "Water Vortex",
                         Players.LocalPlayer.Character
@@ -2713,14 +2714,11 @@ GameTab:CreateToggle({
                         }
                     }
                     ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args3))
-
-                    wait(0.1)
                 end
             end)
         end
     end
 })
-
 
 
 GameTab:CreateToggle({
@@ -2860,6 +2858,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
