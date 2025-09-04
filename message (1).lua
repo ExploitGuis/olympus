@@ -2475,48 +2475,49 @@ SigmaTab:CreateLabel("Nothing here yet..", 18638286567)
 GameTab:CreateLabel("Enjoy New Update!", 18638286567)
 
 GameTab:CreateToggle({
-    Name = "AutoToxic",
+    Name = "SpamChat",
     CurrentValue = false,
     Flag = "Toggle1",
     Callback = function(Value)
-        _G.AutoToxic = Value
+        _G.SpamChat = Value
 
-        local Players = game:GetService("Players")
-        local LocalPlayer = Players.LocalPlayer
+        if Value then
+            task.spawn(function()
+                local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                local TextChatService = game:GetService("TextChatService")
 
-        local function hookPlayer(player)
-            local function onCharacterAdded(character)
-                local humanoid = character:WaitForChild("Humanoid", 10)
-                if humanoid then
-                    humanoid.Died:Connect(function()
-                        if _G.AutoToxic then
-                            local messages = {
-                                "EZZ YOUR SO BAD | OlympusHub",
-                                "This is to easy " .. player.Name .. ", your horrible | OlympusHub"
-                            }
-                            local chosen = messages[math.random(1, #messages)]
-                            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(chosen, "All")
+                local function sendMessage(msg)
+                    local ok = false
+                    if TextChatService and TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+                        local general = TextChatService:FindFirstChild("TextChannels") and TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+                        if general then
+                            local success, err = pcall(function()
+                                general:SendAsync(msg)
+                            end)
+                            if success then ok = true end
                         end
-                    end)
+                    end
+                    if not ok then
+                        local evts = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+                        if evts and evts:FindFirstChild("SayMessageRequest") then
+                            evts.SayMessageRequest:FireServer(msg, "All")
+                        end
+                    end
                 end
-            end
-            if player.Character then
-                onCharacterAdded(player.Character)
-            end
-            player.CharacterAdded:Connect(onCharacterAdded)
-        end
 
-        for _, player in ipairs(Players:GetPlayers()) do
-            if player ~= LocalPlayer then
-                hookPlayer(player)
-            end
-        end
+                local messages = { "OLYMPUSHUB ON TOP", "OLYMPUSHUB", "OLL YMPUSHUB" }
 
-        Players.PlayerAdded:Connect(function(player)
-            if player ~= LocalPlayer then
-                hookPlayer(player)
-            end
-        end)
+                while _G.SpamChat do
+                    local msg = messages[math.random(1, #messages)]
+                    sendMessage(msg)
+                    if string.find(msg, "#") then
+                        _G.SpamChat = false
+                        break
+                    end
+                    task.wait(2)
+                end
+            end)
+        end
     end,
 })
 
@@ -2778,6 +2779,7 @@ EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Te
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
