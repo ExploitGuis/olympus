@@ -2587,10 +2587,9 @@ GameTab:CreateToggle({
         local Players = game:GetService("Players")
         local ReplicatedStorage = game:GetService("ReplicatedStorage")
         local localPlayer = Players.LocalPlayer
-        local isToggled = Value
 
         local function teleportAndOccupy()
-            while isToggled do
+            while Value do
                 local allPlayers = Players:GetPlayers()
                 local randomPlayer = allPlayers[math.random(1, #allPlayers)]
 
@@ -2644,7 +2643,7 @@ GameTab:CreateToggle({
             end
         end
 
-        if isToggled then
+        if Value then
             teleportAndOccupy()
         end
     end,
@@ -2660,6 +2659,7 @@ EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
