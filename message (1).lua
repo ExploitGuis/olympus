@@ -2659,8 +2659,10 @@ GameTab:CreateToggle({
 
 local RunService = game:GetService("RunService")
 
+local RunService = game:GetService("RunService")
+
 GameTab:CreateToggle({
-    Name = "AutoKill (WISDAP)",
+    Name = "AutoKill (WIP)",
     CurrentValue = false,
     Flag = "Toggle1",
     Callback = function(Value)
@@ -2669,6 +2671,9 @@ GameTab:CreateToggle({
                 while Value do
                     local Players = game:GetService("Players")
                     local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                    local localPlayer = Players.LocalPlayer
+                    local localChar = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+                    local humanoidRoot = localChar:WaitForChild("HumanoidRootPart")
 
                     local args1 = {
                         "Occupy",
@@ -2687,21 +2692,23 @@ GameTab:CreateToggle({
                     ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args1))
 
                     local allPlayers = Players:GetPlayers()
-                    local randomPlayer = allPlayers[math.random(1, #allPlayers)]
-                    if randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                        local localChar = Players.LocalPlayer.Character
-                        if localChar and localChar:FindFirstChild("HumanoidRootPart") then
-                            localChar.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
-                            repeat
-                                RunService.Heartbeat:Wait()
-                            until (localChar.HumanoidRootPart.Position - randomPlayer.Character.HumanoidRootPart.Position).Magnitude < 2
-                            local args2 = {
-                                "Water Vortex",
-                                localChar
-                            }
-                            ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args2))
-                        end
-                    end
+                    local randomPlayer
+                    repeat
+                        randomPlayer = allPlayers[math.random(1, #allPlayers)]
+                    until randomPlayer ~= localPlayer and randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart")
+
+                    local targetHRP = randomPlayer.Character:WaitForChild("HumanoidRootPart")
+                    humanoidRoot.CFrame = targetHRP.CFrame
+
+                    repeat
+                        RunService.Heartbeat:Wait()
+                    until (humanoidRoot.Position - targetHRP.Position).Magnitude < 2
+
+                    local args2 = {
+                        "Water Vortex",
+                        localChar
+                    }
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args2))
 
                     local args3 = {
                         "Occupy",
@@ -2726,80 +2733,90 @@ GameTab:CreateToggle({
 
 
 
+local RunService = game:GetService("RunService")
+
 GameTab:CreateToggle({
-   Name = "Mass Earthquake (Hera)",
-   CurrentValue = false,
-   Flag = "Toggle1",
-   Callback = function(Value)
-       if Value then
-           _G.MassEarthquakeHera = true
-           task.spawn(function()
-               local Players = game:GetService("Players")
-               local ReplicatedStorage = game:GetService("ReplicatedStorage")
-               local LocalPlayer = Players.LocalPlayer
+    Name = "Mass Earthquake (Hera)",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        if Value then
+            _G.MassEarthquakeHera = true
+            task.spawn(function()
+                local Players = game:GetService("Players")
+                local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                local LocalPlayer = Players.LocalPlayer
+                local localChar = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+                local humanoidRoot = localChar:WaitForChild("HumanoidRootPart")
 
-               function getRandomPlayer()
-                   local plrs = Players:GetPlayers()
-                   if #plrs > 1 then
-                       local randomPlr = plrs[math.random(1, #plrs)]
-                       if randomPlr ~= LocalPlayer then
-                           return randomPlr
-                       end
-                   end
-                   return nil
-               end
+                function getRandomPlayer()
+                    local plrs = Players:GetPlayers()
+                    if #plrs > 1 then
+                        local randomPlr
+                        repeat
+                            randomPlr = plrs[math.random(1, #plrs)]
+                        until randomPlr ~= LocalPlayer and randomPlr.Character and randomPlr.Character:FindFirstChild("HumanoidRootPart")
+                        return randomPlr
+                    end
+                    return nil
+                end
 
-               while _G.MassEarthquakeHera do
-                   wait(1)
+                while _G.MassEarthquakeHera do
+                    wait(1)
 
-                   local args = {
-                       "Occupy",
-                       "Hera",
-                       {
-                           Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
-                           SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
-                           AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
-                           IconFrame      = "rbxassetid://109487525162601",
-                           PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
-                           Gamepass       = false,
-                           GamepassId     = 1062037243,
-                           Name           = "Hera"
-                       }
-                   }
-                   ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args))
+                    local args1 = {
+                        "Occupy",
+                        "Hera",
+                        {
+                            Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                            SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                            AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                            IconFrame      = "rbxassetid://109487525162601",
+                            PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                            Gamepass       = false,
+                            GamepassId     = 1062037243,
+                            Name           = "Hera"
+                        }
+                    }
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args1))
 
-                   local target = getRandomPlayer()
-                   if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-                       LocalPlayer.Character:MoveTo(target.Character.HumanoidRootPart.Position)
-                   end
+                    local target = getRandomPlayer()
+                    if target then
+                        local targetHRP = target.Character:WaitForChild("HumanoidRootPart")
+                        humanoidRoot.CFrame = targetHRP.CFrame
 
-                   local args = {
-                       "Terrakinetic Earthquake",
-                       LocalPlayer.Character
-                   }
-                   ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
+                        repeat
+                            RunService.Heartbeat:Wait()
+                        until (humanoidRoot.Position - targetHRP.Position).Magnitude < 2
 
-                   local args = {
-                       "Occupy",
-                       "Iris",
-                       {
-                           Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
-                           SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
-                           AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
-                           IconFrame      = "rbxassetid://109487525162601",
-                           PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
-                           Gamepass       = false,
-                           GamepassId     = 1062037243,
-                           Name           = "Iris"
-                       }
-                   }
-                   ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args))
-               end
-           end)
-       else
-           _G.MassEarthquakeHera = false
-       end
-   end,
+                        local args2 = {
+                            "Terrakinetic Earthquake",
+                            localChar
+                        }
+                        ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args2))
+                    end
+
+                    local args3 = {
+                        "Occupy",
+                        "Iris",
+                        {
+                            Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                            SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                            AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                            IconFrame      = "rbxassetid://109487525162601",
+                            PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                            Gamepass       = false,
+                            GamepassId     = 1062037243,
+                            Name           = "Iris"
+                        }
+                    }
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args3))
+                end
+            end)
+        else
+            _G.MassEarthquakeHera = false
+        end
+    end,
 })
 
 
@@ -2863,6 +2880,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
