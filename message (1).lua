@@ -2661,6 +2661,8 @@ local RunService = game:GetService("RunService")
 
 local RunService = game:GetService("RunService")
 
+local RunService = game:GetService("RunService")
+
 GameTab:CreateToggle({
     Name = "AutoKill (WIP)",
     CurrentValue = false,
@@ -2671,9 +2673,6 @@ GameTab:CreateToggle({
                 while Value do
                     local Players = game:GetService("Players")
                     local ReplicatedStorage = game:GetService("ReplicatedStorage")
-                    local localPlayer = Players.LocalPlayer
-                    local localChar = localPlayer.Character or localPlayer.CharacterAdded:Wait()
-                    local humanoidRoot = localChar:WaitForChild("HumanoidRootPart")
 
                     local args1 = {
                         "Occupy",
@@ -2692,23 +2691,21 @@ GameTab:CreateToggle({
                     ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args1))
 
                     local allPlayers = Players:GetPlayers()
-                    local randomPlayer
-                    repeat
-                        randomPlayer = allPlayers[math.random(1, #allPlayers)]
-                    until randomPlayer ~= localPlayer and randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart")
-
-                    local targetHRP = randomPlayer.Character:WaitForChild("HumanoidRootPart")
-                    humanoidRoot.CFrame = targetHRP.CFrame
-
-                    repeat
-                        RunService.Heartbeat:Wait()
-                    until (humanoidRoot.Position - targetHRP.Position).Magnitude < 2
-
-                    local args2 = {
-                        "Water Vortex",
-                        localChar
-                    }
-                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args2))
+                    local randomPlayer = allPlayers[math.random(1, #allPlayers)]
+                    if randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                        local localChar = Players.LocalPlayer.Character
+                        if localChar and localChar:FindFirstChild("HumanoidRootPart") then
+                            localChar.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
+                            repeat
+                                RunService.Heartbeat:Wait()
+                            until (localChar.HumanoidRootPart.Position - randomPlayer.Character.HumanoidRootPart.Position).Magnitude < 2
+                            local args2 = {
+                                "Water Vortex",
+                                localChar
+                            }
+                            ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args2))
+                        end
+                    end
 
                     local args3 = {
                         "Occupy",
@@ -2731,7 +2728,7 @@ GameTab:CreateToggle({
     end
 })
 
-
+local RunService = game:GetService("RunService")
 
 local RunService = game:GetService("RunService")
 
@@ -2785,9 +2782,8 @@ GameTab:CreateToggle({
                         local targetHRP = target.Character:WaitForChild("HumanoidRootPart")
                         humanoidRoot.CFrame = targetHRP.CFrame
 
-                        repeat
-                            RunService.Heartbeat:Wait()
-                        until (humanoidRoot.Position - targetHRP.Position).Magnitude < 2
+                        -- Wait one frame to ensure teleport has applied
+                        RunService.Heartbeat:Wait()
 
                         local args2 = {
                             "Terrakinetic Earthquake",
@@ -2880,6 +2876,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
