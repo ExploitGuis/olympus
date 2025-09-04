@@ -2475,6 +2475,103 @@ SigmaTab:CreateLabel("Nothing here yet..", 18638286567)
 GameTab:CreateLabel("Enjoy New Update!", 18638286567)
 
 GameTab:CreateToggle({
+    Name = "Telekinesis Glitch (Hecate)",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        _G.TelekinesisGlitch = Value
+
+        local Players = game:GetService("Players")
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local localPlayer = Players.LocalPlayer
+        local radius = 20
+        local currentTarget = nil
+        local highlighted = {}
+
+        local function getNearbyPlayers(radius)
+            local nearbyPlayers = {}
+            local myChar = localPlayer.Character
+            if not myChar or not myChar:FindFirstChild("HumanoidRootPart") then
+                return nearbyPlayers
+            end
+            local myPosition = myChar.HumanoidRootPart.Position
+
+            for _, player in pairs(Players:GetPlayers()) do
+                if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    local distance = (player.Character.HumanoidRootPart.Position - myPosition).magnitude
+                    if distance <= radius then
+                        table.insert(nearbyPlayers, player)
+                    end
+                end
+            end
+            return nearbyPlayers
+        end
+
+        task.spawn(function()
+            while _G.TelekinesisGlitch do
+                wait(0.1)
+                
+                local nearbyPlayers = getNearbyPlayers(radius)
+                
+                for _, player in pairs(nearbyPlayers) do
+                    if not highlighted[player] and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                        local highlight = Instance.new("Highlight")
+                        highlight.FillColor = Color3.fromRGB(255, 105, 180)
+                        highlight.FillTransparency = 0.5
+                        highlight.OutlineTransparency = 1
+                        highlight.Parent = player.Character
+                        highlighted[player] = highlight
+                    end
+                end
+                
+                for player, highlight in pairs(highlighted) do
+                    local stillNearby = false
+                    for _, p in pairs(nearbyPlayers) do
+                        if p == player then
+                            stillNearby = true
+                            break
+                        end
+                    end
+                    if not stillNearby then
+                        highlight:Destroy()
+                        highlighted[player] = nil
+                    end
+                end
+
+                if _G.TelekinesisGlitch and #nearbyPlayers > 0 then
+                    if currentTarget then
+                        for i, player in ipairs(nearbyPlayers) do
+                            if player == currentTarget then
+                                table.remove(nearbyPlayers, i)
+                                break
+                            end
+                        end
+                    end
+                    if #nearbyPlayers > 0 then
+                        local targetPlayer = nearbyPlayers[math.random(1, #nearbyPlayers)]
+                        currentTarget = targetPlayer
+                        local args = {
+                            "Telekinesis",
+                            localPlayer.Character,
+                            targetPlayer.Character
+                        }
+                        ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
+                    end
+                end
+
+                wait(3)
+            end
+
+            for player, highlight in pairs(highlighted) do
+                highlight:Destroy()
+            end
+            highlighted = {}
+            currentTarget = nil
+        end)
+    end,
+})
+
+GameTab:CreateToggle({
     Name = "AutoKill Server (Hera)",
     CurrentValue = false,
     Flag = "Toggle1",
@@ -2635,6 +2732,7 @@ EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Te
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
