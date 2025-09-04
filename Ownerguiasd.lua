@@ -1,14 +1,14 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-    Name = "|   [UPDATE OUT NOW] Olympus",
+    Name = "|   Olympus DEV GUI",
     Icon = 134461174841260,
     LoadingTitle = "[UPDATE OUT NOW] Olympus",
-    LoadingSubtitle = "Loading Exploits.. <3",
+    LoadingSubtitle = "✰ ✰ ✰ Loading Exploits.. ✰ ✰ ✰",
     ConfigurationSaving = {
         Enabled = true,
         FolderName = nil,
-        FileName = "OLYMPUS HUB"
+        FileName = "Dev GUI"
     }, 
 
 Theme = {
@@ -64,11 +64,20 @@ Theme = {
 },
 
     Discord = {
-        Enabled = true,
+        Enabled = false,
         Invite = "ZHpN6hAFnu", -- Replace with your actual Discord invite code
         RememberJoins = true
     },
-    KeySystem = false -- No key system required
+    KeySystem = true, 
+   KeySettings = {
+      Title = "DEV GUI",
+      Subtitle = "Key System",
+      Note = "Cannot Obtain Key",
+      FileName = "DEV91341", 
+      SaveKey = false, 
+      GrabKeyFromSite = false, 
+      Key = {"xeVWJhJNqx2xKGccmJjf"}
+   }
 })
 
 -- Create tabs
@@ -78,6 +87,7 @@ local ESTab = Window:CreateTab("ESP", 16369898431)
 local ExtrTab = Window:CreateTab("TP", 6723742952)
 local SigmaTab = Window:CreateTab("Game", 4728059072)
 local GameTab = Window:CreateTab("Troll", 15782262663)
+local DevTab = Window:CreateTab("DEV", 13441691835)
 local EvntTab = Window:CreateTab("Info", 8798704474)
 
 local Players = game:GetService("Players")
@@ -86,7 +96,7 @@ local LocalPlayer = Players.LocalPlayer
 Rayfield:Notify({
     Title = "Success✅!",
     Content = "Welcome '" .. LocalPlayer.DisplayName .. "'!",
-    Duration = 20,
+    Duration = 10,
     Image = nil,
     Actions = {
         Close = {
@@ -2482,3 +2492,4 @@ EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "Release!"})
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
