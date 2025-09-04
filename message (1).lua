@@ -2582,7 +2582,7 @@ GameTab:CreateToggle({
 })
 
 GameTab:CreateToggle({
-    Name = "Mass Earthquake (Hera + Hestia)",
+    Name = "Mass Earthquake (Hera + Iris)",
     CurrentValue = false,
     Flag = "Toggle1",
     Callback = function(Value)
@@ -2610,7 +2610,7 @@ GameTab:CreateToggle({
 
                     local occupyArgs1 = {
                         "Occupy",
-                        "Hestia",
+                        "Iris",
                         {
                             Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
                             SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
@@ -2619,7 +2619,7 @@ GameTab:CreateToggle({
                             PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
                             Gamepass       = false,
                             GamepassId     = 1062037243,
-                            Name   = "Hestia"
+                            Name   = "Iris"
                         }
                     }
                     ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs1))
@@ -2657,7 +2657,7 @@ GameTab:CreateToggle({
 })
 
 GameTab:CreateDropdown({
-    Name = "Select Player",
+    Name = "AutoKill | Select Player",
     Options = function()
         local players = {}
         for _, player in pairs(game:GetService("Players"):GetPlayers()) do
@@ -2672,9 +2672,13 @@ GameTab:CreateDropdown({
         local selectedPlayerName = Options[1]
         local localPlayer = game:GetService("Players").LocalPlayer
         local selectedPlayer = game:GetService("Players"):WaitForChild(selectedPlayerName)
-        
+
         local function performActions()
             while selectedPlayer.Character and selectedPlayer.Character:FindFirstChild("Humanoid") and selectedPlayer.Character.Humanoid.Health > 0 do
+                if selectedPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    localPlayer.Character:SetPrimaryPartCFrame(selectedPlayer.Character.HumanoidRootPart.CFrame)
+                end
+
                 local args = {
                     "Telekinetic Combo",
                     localPlayer.Character,
@@ -2686,7 +2690,7 @@ GameTab:CreateDropdown({
 
                 local occupyArgs1 = {
                     "Occupy",
-                    "Hestia",
+                    "Iris",
                     {
                         Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
                         SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
@@ -2695,7 +2699,7 @@ GameTab:CreateDropdown({
                         PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
                         Gamepass       = false,
                         GamepassId     = 1062037243,
-                        Name           = "Hestia"
+                        Name           = "Iris"
                     }
                 }
                 game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs1))
@@ -2719,6 +2723,10 @@ GameTab:CreateDropdown({
                 game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs2))
 
                 wait(0)
+
+                if selectedPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    localPlayer.Character:SetPrimaryPartCFrame(selectedPlayer.Character.HumanoidRootPart.CFrame)
+                end
             end
         end
 
@@ -2738,6 +2746,7 @@ EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Te
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
