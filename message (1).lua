@@ -2651,16 +2651,89 @@ GameTab:CreateToggle({
     end,
 })
 
+GameTab:CreateDropdown({
+    Name = "Auto Kill (Hera + Hestia)",
+    Options = function()
+        local players = {}
+        for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+            table.insert(players, player.Name)
+        end
+        return players
+    end,
+    CurrentOption = {"Option 1"},
+    MultipleOptions = false,
+    Flag = "Dropdown1",
+    Callback = function(Options)
+        local selectedPlayerName = Options[1]
+        local localPlayer = game:GetService("Players").LocalPlayer
+        local selectedPlayer = game:GetService("Players"):WaitForChild(selectedPlayerName)
+        
+        local function performActions()
+            while selectedPlayer.Character and selectedPlayer.Character:FindFirstChild("Humanoid") and selectedPlayer.Character.Humanoid.Health > 0 do
+                local args = {
+                    "Telekinetic Combo",
+                    localPlayer.Character,
+                    selectedPlayer.Character
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
+
+                wait(2)
+
+                local occupyArgs1 = {
+                    "Occupy",
+                    "Hestia",
+                    {
+                        Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                        SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                        AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                        IconFrame      = "rbxassetid://109487525162601",
+                        PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                        Gamepass       = false,
+                        GamepassId     = 1062037243,
+                        Name           = "Hestia"
+                    }
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs1))
+
+                wait(0)
+
+                local occupyArgs2 = {
+                    "Occupy",
+                    "Hera",
+                    {
+                        Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                        SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                        AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                        IconFrame      = "rbxassetid://109487525162601",
+                        PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                        Gamepass       = false,
+                        GamepassId     = 1062037243,
+                        Name           = "Hera"
+                    }
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs2))
+
+                wait(0)
+            end
+        end
+
+        if selectedPlayer and selectedPlayer.Character then
+            performActions()
+        end
+    end,
+})
+
 
 -- EventTab Sections
 EvntTab:CreateSection("Info")
 EvntTab:CreateParagraph({Title = "Olympus Script Developers🛠️", Content = "Kermisha & MotherOfGrass & Moon"})
 EvntTab:CreateParagraph({Title = "Support Discord DMS💬", Content = "kermishaurfavx & grassmother & themoonandsunreuinite"})
-EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Telekenisis Glitch, Mass Earthquake"})
+EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Telekenisis Glitch+Mass Earthquake+Auto Kill"})
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
