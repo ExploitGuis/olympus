@@ -2666,7 +2666,7 @@ local RunService = game:GetService("RunService")
 local RunService = game:GetService("RunService")
 
 GameTab:CreateButton({
-    Name = "Voertex (Poseidon)",
+    Name = "Vortex (Poseidon)",
     Callback = function()
         local Players = game:GetService("Players")
         local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -2711,7 +2711,7 @@ GameTab:CreateButton({
         localChar = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
         hrp = localChar:WaitForChild("HumanoidRootPart")
         hrp.CFrame = savedCFrame
-
+        wait(3)
         local argsVortex = {
             "Water Vortex",
             localChar
@@ -2869,6 +2869,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
