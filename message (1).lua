@@ -2658,7 +2658,7 @@ GameTab:CreateToggle({
 })
 
 GameTab:CreateToggle({
-    Name = "AutoKill (WIP)",
+    Name = "AutoKill (opIP)",
     CurrentValue = false,
     Flag = "Toggle1",
     Callback = function(Value)
@@ -2692,14 +2692,11 @@ GameTab:CreateToggle({
                             localChar.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
                         end
                     end
-                  wait(1)
                     local args2 = {
                         "Water Vortex",
                         Players.LocalPlayer.Character
                     }
                     ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args2))
-
-                    wait(2)
 
                     local args3 = {
                         "Occupy",
@@ -2863,6 +2860,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
