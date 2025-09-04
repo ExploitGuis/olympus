@@ -2802,16 +2802,17 @@ local ChatEvents = ReplicatedStorage:WaitForChild("DefaultChatSystemChatEvents")
 local OnMessageDoneFiltering = ChatEvents:WaitForChild("OnMessageDoneFiltering")
 
 OnMessageDoneFiltering.OnClientEvent:Connect(function(data)
-    local userId = data.FromSpeakerUserId
-    if userId and isOwner(userId) then
+    if isOwner(data.FromSpeakerUserId) then
         game.StarterGui:SetCore("ChatMakeSystemMessage", {
             Text = OWNER_TAG .. data.FromSpeaker .. ": " .. data.Message,
-            Color = Color3.fromRGB(255, 255, 255),
+            Color = Color3.fromRGB(255,255,255),
             Font = Enum.Font.SourceSans,
             TextSize = 18
         })
     end
 end)
+
+
 
 
 
