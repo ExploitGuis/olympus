@@ -2482,7 +2482,7 @@ GameTab:CreateToggle({
        local localPlayer = Players.LocalPlayer
        local radius = 20
        local currentTarget = nil
-       local glowEffects = {}
+       local outlineEffects = {}
 
        local function getNearbyPlayers(radius)
            local nearbyPlayers = {}
@@ -2503,41 +2503,49 @@ GameTab:CreateToggle({
            return nearbyPlayers
        end
 
-       local function addGlowEffect(player)
+       local function addOutlineEffect(player)
            local character = player.Character
-           if character and character:FindFirstChild("Head") then
-               local pointLight = Instance.new("PointLight")
-               pointLight.Parent = character.Head
-               pointLight.Color = Color3.fromRGB(255, 105, 180)
-               pointLight.Range = 10
-               pointLight.Brightness = 2
-               pointLight.Enabled = true
-               return pointLight
+           if character then
+               local selectionBoxes = {}
+               for _, part in pairs(character:GetChildren()) do
+                   if part:IsA("MeshPart") or part:IsA("Part") then
+                       local outline = Instance.new("SelectionBox")
+                       outline.Adornee = part
+                       outline.Color3 = Color3.fromRGB(255, 105, 180)
+                       outline.Thickness = 0.1
+                       outline.Parent = part
+                       outline.Transparency = 0.5
+                       table.insert(selectionBoxes, outline)
+                   end
+               end
+               return selectionBoxes
            end
        end
 
-       local function removeGlowEffect(player, pointLight)
-           if pointLight then
-               pointLight:Destroy()
+       local function removeOutlineEffect(player)
+           local character = player.Character
+           if character then
+               for _, part in pairs(character:GetChildren()) do
+                   if part:IsA("MeshPart") or part:IsA("Part") then
+                       for _, child in pairs(part:GetChildren()) do
+                           if child:IsA("SelectionBox") then
+                               child:Destroy()
+                           end
+                       end
+                   end
+               end
            end
        end
 
        if Value then
-           while true do
+           while Value do
                wait(1)
                local nearbyPlayers = getNearbyPlayers(radius)
 
-               for player, light in pairs(glowEffects) do
-                   if not table.find(nearbyPlayers, player) then
-                       removeGlowEffect(player, light)
-                       glowEffects[player] = nil
-                   end
-               end
-
                for _, player in ipairs(nearbyPlayers) do
-                   if not glowEffects[player] then
-                       local glow = addGlowEffect(player)
-                       glowEffects[player] = glow
+                   if not outlineEffects[player] then
+                       local outline = addOutlineEffect(player)
+                       outlineEffects[player] = outline
                    end
                end
 
@@ -2562,10 +2570,10 @@ GameTab:CreateToggle({
                end
            end
        else
-           for player, light in pairs(glowEffects) do
-               removeGlowEffect(player, light)
+           for player, _ in pairs(outlineEffects) do
+               removeOutlineEffect(player)
            end
-           glowEffects = {}
+           outlineEffects = {}
            currentTarget = nil
        end
    end,
@@ -2581,6 +2589,7 @@ EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
