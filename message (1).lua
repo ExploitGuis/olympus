@@ -2666,7 +2666,7 @@ local RunService = game:GetService("RunService")
 local RunService = game:GetService("RunService")
 
 GameTab:CreateButton({
-    Name = "Vorteex (Poseidon)",
+    Name = "Vortex (Poseidon)",
     Callback = function()
         local Players = game:GetService("Players")
         local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -2674,7 +2674,6 @@ GameTab:CreateButton({
 
         local localChar = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
         local hrp = localChar:WaitForChild("HumanoidRootPart")
-
         local originalCFrame = hrp.CFrame
 
         local args1 = {
@@ -2691,7 +2690,7 @@ GameTab:CreateButton({
                 Name           = "Iris"
             }
         }
-        ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args1))
+        ReplicatedStorage.Events.Game.Function:InvokeServer(unpack(args1))
 
         local args2 = {
             "Occupy",
@@ -2707,17 +2706,20 @@ GameTab:CreateButton({
                 Name           = "Poseidon"
             }
         }
-        ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args2))
+        ReplicatedStorage.Events.Game.Function:InvokeServer(unpack(args2))
 
+        localChar = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+        hrp = localChar:WaitForChild("HumanoidRootPart")
         hrp.CFrame = originalCFrame
 
         local argsVortex = {
             "Water Vortex",
             localChar
         }
-        ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(argsVortex))
+        ReplicatedStorage.Events.AbilityTrigger:InvokeServer(unpack(argsVortex))
     end
 })
+
 
 local RunService = game:GetService("RunService")
 
@@ -2867,6 +2869,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
