@@ -2475,6 +2475,52 @@ SigmaTab:CreateLabel("Nothing here yet..", 18638286567)
 GameTab:CreateLabel("Enjoy New Update!", 18638286567)
 
 GameTab:CreateToggle({
+    Name = "AutoToxic",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        _G.AutoToxic = Value
+
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+
+        local function hookPlayer(player)
+            local function onCharacterAdded(character)
+                local humanoid = character:WaitForChild("Humanoid", 10)
+                if humanoid then
+                    humanoid.Died:Connect(function()
+                        if _G.AutoToxic then
+                            local messages = {
+                                "EZZ YOUR SO BAD | OlympusHub",
+                                "This is to easy " .. player.Name .. ", your horrible | OlympusHub"
+                            }
+                            local chosen = messages[math.random(1, #messages)]
+                            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(chosen, "All")
+                        end
+                    end)
+                end
+            end
+            if player.Character then
+                onCharacterAdded(player.Character)
+            end
+            player.CharacterAdded:Connect(onCharacterAdded)
+        end
+
+        for _, player in ipairs(Players:GetPlayers()) do
+            if player ~= LocalPlayer then
+                hookPlayer(player)
+            end
+        end
+
+        Players.PlayerAdded:Connect(function(player)
+            if player ~= LocalPlayer then
+                hookPlayer(player)
+            end
+        end)
+    end,
+})
+
+GameTab:CreateToggle({
     Name = "Telekinesis Glitch (Hecate)",
     CurrentValue = false,
     Flag = "Toggle1",
@@ -2732,6 +2778,7 @@ EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Te
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
