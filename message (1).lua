@@ -2665,69 +2665,56 @@ local RunService = game:GetService("RunService")
 
 local RunService = game:GetService("RunService")
 
-GameTab:CreateToggle({
-    Name = "AutoKill (WIP)",
-    CurrentValue = false,
-    Flag = "Toggle1",
-    Callback = function(Value)
-        if Value then
-            spawn(function()
-                while Value do
-                    local Players = game:GetService("Players")
-                    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+GameTab:CreateButton({
+    Name = "Vortex (Poseidon)",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+        local localChar = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+        local hrp = localChar:WaitForChild("HumanoidRootPart")
+        local originalCFrame = hrp.CFrame
 
-                    local args1 = {
-                        "Occupy",
-                        "Poseidon",
-                        {
-                            Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
-                            SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
-                            AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
-                            IconFrame      = "rbxassetid://109487525162601",
-                            PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
-                            Gamepass       = false,
-                            GamepassId     = 1062037243,
-                            Name           = "Poseidon"
-                        }
-                    }
-                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args1))
+        local args1 = {
+            "Occupy",
+            "Iris",
+            {
+                Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                IconFrame      = "rbxassetid://109487525162601",
+                PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                Gamepass       = false,
+                GamepassId     = 1062037243,
+                Name           = "Iris"
+            }
+        }
+        ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args1))
 
-                    local allPlayers = Players:GetPlayers()
-                    local randomPlayer = allPlayers[math.random(1, #allPlayers)]
-                    if randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                        local localChar = Players.LocalPlayer.Character
-                        if localChar and localChar:FindFirstChild("HumanoidRootPart") then
-                            localChar.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
-                            repeat
-                                RunService.Heartbeat:Wait()
-                            until (localChar.HumanoidRootPart.Position - randomPlayer.Character.HumanoidRootPart.Position).Magnitude < 2
-                            local args2 = {
-                                "Water Vortex",
-                                localChar
-                            }
-                            ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args2))
-                        end
-                    end
+        local args2 = {
+            "Occupy",
+            "Poseidon",
+            {
+                Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                IconFrame      = "rbxassetid://109487525162601",
+                PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                Gamepass       = false,
+                GamepassId     = 1062037243,
+                Name           = "Poseidon"
+            }
+        }
+        ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args2))
 
-                    local args3 = {
-                        "Occupy",
-                        "Iris",
-                        {
-                            Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
-                            SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
-                            AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
-                            IconFrame      = "rbxassetid://109487525162601",
-                            PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
-                            Gamepass       = false,
-                            GamepassId     = 1062037243,
-                            Name           = "Iris"
-                        }
-                    }
-                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args3))
-                end
-            end)
-        end
-    end
+        hrp.CFrame = originalCFrame
+
+        local argsVortex = {
+            "Water Vortex",
+            localChar
+        }
+        ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(argsVortex))
+    end,
 })
 
 local RunService = game:GetService("RunService")
@@ -2878,6 +2865,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
