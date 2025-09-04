@@ -1,39 +1,339 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-local Window = Rayfield:CreateWindow({    Name = "| [UPDATE OUT NOW] Olympus",    Icon = 134461174841260,    LoadingTitle = "[UPDATE OUT NOW] Olympus",    LoadingSubtitle = "Loading Exploits.. <3",    ConfigurationSaving = {        Enabled = true,        FolderName = nil,        FileName = "OLYMPUS HUB"    }, 
-Theme = {    -- Font & Text    TextFont = "Gotham", -- Clean and modern font    TextColor = Color3.fromRGB(255, 255, 255), -- White text for readability    PlaceholderColor = Color3.fromRGB(120, 120, 170), -- Softer placeholder text
-    -- Main Backgrounds    Background = Color3.fromRGB(20, 20, 20), -- Dark general background    Topbar = Color3.fromRGB(30, 30, 30), -- Slightly lighter topbar    Shadow = Color3.fromRGB(10, 10, 10), -- Subtle shadow
-    -- Notifications    NotificationBackground = Color3.fromRGB(25, 25, 25), -- Matches the topbar    NotificationActionsBackground = Color3.fromRGB(35, 35, 35), -- Slightly brighter for contrast
-    -- Tabs    TabBackground = Color3.fromRGB(35, 35, 35), -- Default tab background    TabStroke = Color3.fromRGB(50, 50, 50), -- Soft stroke for tabs    TabBackgroundSelected = Color3.fromRGB(35, 35, 35), -- Muted blue for selected tabs    TabTextColor = Color3.fromRGB(255, 255, 255), -- White text for tabs    SelectedTabTextColor = Color3.fromRGB(170, 130, 11), -- Updated color (#aa820b)
-    -- Elements    ElementBackground = Color3.fromRGB(25, 25, 25), -- Neutral element background    ElementBackgroundHover = Color3.fromRGB(30, 30, 30), -- Slightly brighter on hover    SecondaryElementBackground = Color3.fromRGB(20, 20, 20), -- For secondary elements    ElementStroke = Color3.fromRGB(50, 50, 50), -- Clean stroke    SecondaryElementStroke = Color3.fromRGB(40, 40, 40), -- For secondary elements
-    -- Sliders    SliderBackground = Color3.fromRGB(170, 130, 11), -- Updated color (#aa820b)    SliderProgress = Color3.fromRGB(170, 130, 11), -- Updated color (#aa820b)    SliderStroke = Color3.fromRGB(50, 50, 50), -- Stroke for the slider
-    -- Toggles    ToggleBackground = Color3.fromRGB(25, 25, 25), -- Toggle base    ToggleEnabled = Color3.fromRGB(170, 130, 11), -- Updated color (#aa820b)    ToggleDisabled = Color3.fromRGB(50, 50, 50), -- Gray for disabled    ToggleEnabledStroke = Color3.fromRGB(60, 60, 60), -- Clean stroke    ToggleDisabledStroke = Color3.fromRGB(40, 40, 40), -- Stroke for disabled    ToggleEnabledOuterStroke = Color3.fromRGB(170, 130, 11), -- Updated color (#aa820b)    ToggleDisabledOuterStroke = Color3.fromRGB(30, 30, 30), -- Faint glow for disabled
-    -- Inputs    InputBackground = Color3.fromRGB(25, 25, 25), -- Neutral input background    InputStroke = Color3.fromRGB(50, 50, 50), -- Stroke for input fields
-    -- Labels & Paragraphs    LabelBackground = Color3.fromRGB(40, 70, 100), -- Muted blue for labels (#284664)    ParagraphBackground = Color3.fromRGB(40, 70, 100) -- Muted blue for paragraphs (#284664)},
-    Discord = {        Enabled = true,        Invite = "ZHpN6hAFnu", -- Replace with your actual Discord invite code        RememberJoins = true    },    KeySystem = false -- No key system required})
--- Create tabslocal MainTab = Window:CreateTab("Main", 13441691835)local SurviTab = Window:CreateTab("Characters", 11537490966)local ESTab = Window:CreateTab("ESP", 16369898431)local ExtrTab = Window:CreateTab("TP", 6723742952)local SigmaTab = Window:CreateTab("Game", 4728059072)local GameTab = Window:CreateTab("Troll", 15782262663)local EvntTab = Window:CreateTab("Info", 8798704474)
-local Players = game:GetService("Players")local LocalPlayer = Players.LocalPlayer
-Rayfield:Notify({    Title = "Successâœ…!",    Content = "Welcome '" .. LocalPlayer.DisplayName .. "'!",    Duration = 20,    Image = nil,    Actions = {        Close = {            Name = "Close",            Callback = function()                print("Notification closed.")            end        }    }})
-game:GetService("UserInputService").JumpRequest:Connect(function()    if infiniteJumpEnabled then        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")    endend)
-MainTab:CreateButton({    Name = "Rejoin",    Callback = function()    local TeleportService = game:GetService("TeleportService")local Players = game:GetService("Players")local LocalPlayer = Players.LocalPlayer local Rejoin = coroutine.create(function()    local Success, ErrorMessage = pcall(function()        TeleportService:Teleport(game.PlaceId, LocalPlayer)    end)     if ErrorMessage and not Success then        warn(ErrorMessage)    endend) coroutine.resume(Rejoin)    end})
-MainTab:CreateSection("Local")
-local UserInputService = game:GetService("UserInputService")local TweenService = game:GetService("TweenService")local Players = game:GetService("Players")local player = Players.LocalPlayerlocal character = player.Character or player.CharacterAdded:Wait()local humanoid = character:WaitForChild("Humanoid")local camera = workspace.CurrentCamera
--- Variableslocal infiniteJumpEnabled = falselocal inputBeganConnection, inputEndedConnection
--- Infinite Jump Togglelocal infJump = MainTab:CreateToggle({    Name = "Infinite Jump",    Default = false,    Callback = function(state)        infiniteJumpEnabled = state    end})
--- Handle infinite jump logicUserInputService.JumpRequest:Connect(function()    if infiniteJumpEnabled then        local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")        if humanoid then            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)        end    endend)
--- Super Sprint ToggleMainTab:CreateToggle({    Name = "Ctrl To Super Sprint",    Default = false,    Callback = function(state)        local normalWalkSpeed = 16        local sprintWalkSpeed = 160        local defaultFOV = 70        local sprintFOV = 100        local tweenTime = 0.5
-        local function tweenFOV(targetFOV)            local tweenInfo = TweenInfo.new(tweenTime, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)            local goal = {FieldOfView = targetFOV}            local tween = TweenService:Create(camera, tweenInfo, goal)            tween:Play()        end
-        local function cleanup()            if inputBeganConnection then                inputBeganConnection:Disconnect()                inputBeganConnection = nil            end            if inputEndedConnection then                inputEndedConnection:Disconnect()                inputEndedConnection = nil            end            humanoid.WalkSpeed = normalWalkSpeed            tweenFOV(defaultFOV)        end
-        if state then            inputBeganConnection = UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)                if not gameProcessedEvent and input.KeyCode == Enum.KeyCode.LeftControl then                    humanoid.WalkSpeed = sprintWalkSpeed                    tweenFOV(sprintFOV)                end            end)
-            inputEndedConnection = UserInputService.InputEnded:Connect(function(input)                if input.KeyCode == Enum.KeyCode.LeftControl then                    humanoid.WalkSpeed = normalWalkSpeed                    tweenFOV(defaultFOV)                end            end)        else            cleanup()        end    end})
+GameTab:CreateToggle({
+   Name = "Telekinesis Glitch (Must Be Hecate)",
+   CurrentValue = false,
+   Flag = "Toggle1",
+   Callback = function(Value)
+       local Players = game:GetService("Players")
+       local ReplicatedStorage = game:GetService("ReplicatedStorage")
+       local localPlayer = Players.LocalPlayer
+       local radius = 20
+       local currentTarget = nil
+       local outlineEffects = {}
 
-MainTab:CreateLabel("Notice: This Is Really Fast.", 107639187292219)
-local function resetTabs(tab)    for _, button in ipairs(tab:GetChildren()) do        if button:IsA("GuiButton") then            button:Destroy()        end    endend
-local walkSpeedSlider = MainTab:CreateSlider({    Name = "WalkSpeed",    Range = {16, 500},    Increment = 1,    Suffix = "Speed",    CurrentValue = 16,    Callback = function(Value)        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value        handleSpeedChange(Value)    end})
-local jumpPowerSlider = MainTab:CreateSlider({    Name = "JumpPower",    Range = {50, 550},    Increment = 1,    Suffix = "JumpPower",    CurrentValue = 50,    Callback = function(Value)        game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value    end})
-MainTab:CreateButton({    Name = "Reset Character",    Callback = function()        local args = { "Kill" }        game:GetService("ReplicatedStorage")            :WaitForChild("Events")            :WaitForChild("Game")            :FireServer(unpack(args))    end,})
-MainTab:CreateSection("Protection")
-local staffProtectionToggle = falselocal staffProtectionConnectionlocal localPlayer = game.Players.LocalPlayer
--- Main toggle for staff protectionlocal protect = MainTab:CreateToggle({    Name = "Leave If Moderator Or Above Joins",    CurrentValue = false,    Callback = function(state)        staffProtectionToggle = state
+       local function getNearbyPlayers(radius)
+           local nearbyPlayers = {}
+           local myChar = localPlayer.Character
+           if not myChar or not myChar:FindFirstChild("HumanoidRootPart") then
+               return nearbyPlayers
+           end
+           local myPosition = myChar.HumanoidRootPart.Position
+
+           for _, player in pairs(Players:GetPlayers()) do
+               if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                   local distance = (player.Character.HumanoidRootPart.Position - myPosition).magnitude
+                   if distance <= radius then
+                       table.insert(nearbyPlayers, player)
+                   end
+               end
+           end
+           return nearbyPlayers
+       end
+
+       local function addOutlineEffect(player)
+           local character = player.Character
+           if character then
+               local selectionBoxes = {}
+               for _, part in pairs(character:GetChildren()) do
+                   if part:IsA("MeshPart") or part:IsA("Part") then
+                       local outline = Instance.new("SelectionBox")
+                       outline.Adornee = part
+                       outline.Color3 = Color3.fromRGB(255, 105, 180)
+                       outline.Thickness = 0.1
+                       outline.Parent = part
+                       outline.Transparency = 0.5
+                       table.insert(selectionBoxes, outline)
+                   end
+               end
+               return selectionBoxes
+           end
+       end
+
+       local function removeOutlineEffect(player)
+           local character = player.Character
+           if character then
+               for _, part in pairs(character:GetChildren()) do
+                   if part:IsA("MeshPart") or part:IsA("Part") then
+                       for _, child in pairs(part:GetChildren()) do
+                           if child:IsA("SelectionBox") then
+                               child:Destroy()
+                           end
+                       end
+                   end
+               end
+           end
+       end
+
+       if Value then
+           while Value do
+               wait(1)
+               local nearbyPlayers = getNearbyPlayers(radius)
+
+               for _, player in ipairs(nearbyPlayers) do
+                   if not outlineEffects[player] then
+                       local outline = addOutlineEffect(player)
+                       outlineEffects[player] = outline
+                   end
+               end
+
+               if currentTarget then
+                   for i, player in ipairs(nearbyPlayers) do
+                       if player == currentTarget then
+                           table.remove(nearbyPlayers, i)
+                           break
+                       end
+                   end
+               end
+
+               if #nearbyPlayers > 0 then
+                   local targetPlayer = nearbyPlayers[math.random(1, #nearbyPlayers)]
+                   currentTarget = targetPlayer
+                   local args = {
+                       "Telekinesis",
+                       localPlayer.Character,
+                       targetPlayer.Character
+                   }
+                   ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
+               end
+           end
+       else
+           for player, _ in pairs(outlineEffects) do
+               removeOutlineEffect(player)
+           end
+           outlineEffects = {}
+           currentTarget = nil
+       end
+   end,
+})
+
+GameTab:CreateToggle({
+    Name = "Mass Earthquake (Hera + Iris)",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        local Players = game:GetService("Players")
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local localPlayer = Players.LocalPlayer
+        local isToggled = Value
+        local stopLoop = false
+
+        local function teleportAndOccupy()
+            while isToggled and not stopLoop do
+                local allPlayers = Players:GetPlayers()
+                local randomPlayer = allPlayers[math.random(1, #allPlayers)]
+
+                if randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    localPlayer.Character:SetPrimaryPartCFrame(randomPlayer.Character.HumanoidRootPart.CFrame)
+                    wait(2)
+                    teleportAndOccupy()
+                    local args = {
+                        "Terrakinetic Earthquake",
+                        localPlayer.Character
+                    }
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
+
+                    wait(0)
+
+                    local occupyArgs1 = {
+                        "Occupy",
+                        "Iris",
+                        {
+                            Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                            SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                            AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                            IconFrame      = "rbxassetid://109487525162601",
+                            PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                            Gamepass       = false,
+                            GamepassId     = 1062037243,
+                            Name   = "Iris"
+                        }
+                    }
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs1))
+
+                    wait(0)
+
+                    local occupyArgs2 = {
+                        "Occupy",
+                        "Hera",
+                        {
+                            Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                            SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                            AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                            IconFrame      = "rbxassetid://109487525162601",
+                            PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                            Gamepass       = false,
+                            GamepassId     = 1062037243,
+                            Name   = "Hera"
+                        }
+                    }
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs2))
+
+                    wait(0)
+                end
+            end
+        end
+
+        if Value then
+            stopLoop = false
+        else
+            stopLoop = true
+        end
+    end,
+})
+
+GameTab:CreateDropdown({
+    Name = "AutoKill | Select Player",
+    Options = function()
+        local players = {}
+        for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+            table.insert(players, player.Name)
+        end
+        return players
+    end,
+    CurrentOption = {game:GetService("Players").LocalPlayer.Name},
+    MultipleOptions = false,
+    Flag = "Dropdown1",
+    Callback = function(Options)
+        local selectedPlayerName = Options[1]
+        local localPlayer = game:GetService("Players").LocalPlayer
+        local selectedPlayer = game:GetService("Players"):WaitForChild(selectedPlayerName)
+
+        local function performActions()
+            while selectedPlayer.Character and selectedPlayer.Character:FindFirstChild("Humanoid") and selectedPlayer.Character.Humanoid.Health > 0 do
+                if selectedPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    localPlayer.Character:SetPrimaryPartCFrame(selectedPlayer.Character.HumanoidRootPart.CFrame)
+                end
+
+                local args = {
+                    "Telekinetic Combo",
+                    localPlayer.Character,
+                    selectedPlayer.Character
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
+
+                wait(0)
+
+                local occupyArgs1 = {
+                    "Occupy",
+                    "Iris",
+                    {
+                        Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                        SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                        AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                        IconFrame      = "rbxassetid://109487525162601",
+                        PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                        Gamepass       = false,
+                        GamepassId     = 1062037243,
+                        Name           = "Iris"
+                    }
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs1))
+
+                wait(0)
+
+                local occupyArgs2 = {
+                    "Occupy",
+                    "Hera",
+                    {
+                        Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                        SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                        AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                        IconFrame      = "rbxassetid://109487525162601",
+                        PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                        Gamepass       = false,
+                        GamepassId     = 1062037243,
+                        Name           = "Hera"
+                    }
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs2))
+
+                wait(0)
+
+                if selectedPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    localPlayer.Character:SetPrimaryPartCFrame(selectedPlayer.Character.HumanoidRootPart.CFrame)
+                end
+            end
+        end
+
+        if selectedPlayer and selectedPlayer.Character then
+            performActions()
+        end
+    end,
+})
+
+GameTab:CreateToggle({
+    Name = "AutoKill Server",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        local Players = game:GetService("Players")
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local localPlayer = Players.LocalPlayer
+        local isRunning = false
+
+        local function teleportAndAttack()
+            while Value do
+                local allPlayers = Players:GetPlayers()
+                local randomPlayer = allPlayers[math.random(1, #allPlayers)]
+
+                if randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    localPlayer.Character:SetPrimaryPartCFrame(randomPlayer.Character.HumanoidRootPart.CFrame)
+                end
+
+                local args = {
+                    "Telekinetic Combo",
+                    localPlayer.Character,
+                    randomPlayer.Character
+                }
+                ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
+
+                wait(0)
+
+                local occupyArgs1 = {
+                    "Occupy",
+                    "Iris",
+                    {
+                        Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                        SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                        AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                        IconFrame      = "rbxassetid://109487525162601",
+                        PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                        Gamepass       = false,
+                        GamepassId     = 1062037243,
+                        Name           = "Iris"
+                    }
+                }
+                ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs1))
+
+                wait(0)
+
+                local occupyArgs2 = {
+                    "Occupy",
+                    "Hera",
+                    {
+                        Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
+                        SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
+                        AccentColor    = Color3.new(0.18431372940540314, 0.24313725531101227, 0.42352941632270813),
+                        IconFrame      = "rbxassetid://109487525162601",
+                        PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
+                        Gamepass       = false,
+                        GamepassId     = 1062037243,
+                        Name           = "Hera"
+                    }
+                }
+                ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(occupyArgs2))
+
+                wait(0)
+            end
+        end
+
+        if Value then
+            isRunning = true
+            teleportAndAttack()
+        else
+            isRunning = false
+        end
+    end,
+})
         local targetUserIDs = {            [2280900504] = true,            [2692448426] = true,            [2606417477] = true,            [333153856] = true,            [2885429800] = true,            [1576309590] = true,            [3306603525] = true,            [1513655551] = true,            [633591158] = true,            [1562662945] = true,            [1920137678] = true,            [176544145] = true,            [3411949622] = true,            [2546818774] = true,            [940191686] = true,            [1138595949] = true,            [203051852] = true,            [2270810010] = true,            [361590181] = true,            [7179270897] = true,            [7864715605] = true        }
         local function kickPlayerIfNeeded(joinedPlayer)            if targetUserIDs[joinedPlayer.UserId] then                localPlayer:Kick("A Moderator Or Above From This Game Has Joined Your Server.")            end        end
         if state then            -- Check existing players            for _, existingPlayer in ipairs(game.Players:GetPlayers()) do                kickPlayerIfNeeded(existingPlayer)            end
