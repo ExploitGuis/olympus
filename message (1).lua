@@ -2683,7 +2683,7 @@ GameTab:CreateToggle({
                         }
                     }
                     ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args1))
-
+                    wait(2)
                     local allPlayers = Players:GetPlayers()
                     local randomPlayer = allPlayers[math.random(1, #allPlayers)]
                     if randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart") then
@@ -2692,7 +2692,7 @@ GameTab:CreateToggle({
                             localChar.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
                         end
                     end
-
+                  wait(1)
                     local args2 = {
                         "Water Vortex",
                         Players.LocalPlayer.Character
@@ -2863,6 +2863,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
