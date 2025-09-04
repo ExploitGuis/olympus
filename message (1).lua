@@ -2479,6 +2479,11 @@ GameTab:CreateToggle({
    CurrentValue = false,
    Flag = "Toggle1",
    Callback = function(Value)
+       GameTab:CreateToggle({
+   Name = "Telekinesis Glitch (Must Be Hecate)",
+   CurrentValue = false,
+   Flag = "Toggle1",
+   Callback = function(Value)
        local Players = game:GetService("Players")
        local ReplicatedStorage = game:GetService("ReplicatedStorage")
        local localPlayer = Players.LocalPlayer
@@ -2589,9 +2594,11 @@ GameTab:CreateToggle({
         local Players = game:GetService("Players")
         local ReplicatedStorage = game:GetService("ReplicatedStorage")
         local localPlayer = Players.LocalPlayer
+        local isToggled = Value
+        local stopLoop = false
 
         local function teleportAndOccupy()
-            while Value do
+            while isToggled and not stopLoop do
                 local allPlayers = Players:GetPlayers()
                 local randomPlayer = allPlayers[math.random(1, #allPlayers)]
 
@@ -2646,10 +2653,14 @@ GameTab:CreateToggle({
         end
 
         if Value then
+            stopLoop = false
             teleportAndOccupy()
+        else
+            stopLoop = true
         end
     end,
 })
+
 
 GameTab:CreateDropdown({
     Name = "Select Player",
@@ -2734,6 +2745,7 @@ EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
