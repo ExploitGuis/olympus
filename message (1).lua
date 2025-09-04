@@ -2548,7 +2548,7 @@ GameTab:CreateToggle({
                     end
                 end
 
-                local messages = { "LUKAS I DIG IN U", "LUKASIMDDIGGININU", "LUKASMAMMI" }
+                local messages = { "KAWAIII", "SENPAI WILL NEVER LOVE YOU", "KAWAIIII" }
 
                 while _G.SpamChat2 do
                     local msg = messages[math.random(1, #messages)]
@@ -2658,34 +2658,19 @@ GameTab:CreateToggle({
 })
 
 GameTab:CreateToggle({
-    Name = "AutoKill Server (BUGGED)",
+    Name = "AutoKill",
     CurrentValue = false,
     Flag = "Toggle1",
     Callback = function(Value)
-        _G.AutoKill = Value
         if Value then
-            local Players = game:GetService("Players")
-            local ReplicatedStorage = game:GetService("ReplicatedStorage")
-            local LocalPlayer = Players.LocalPlayer
+            spawn(function()
+                while Value do
+                    local Players = game:GetService("Players")
+                    local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-            function getRandomPlayer()
-                local plrs = Players:GetPlayers()
-                if #plrs > 1 then
-                    local randomPlr = plrs[math.random(1, #plrs)]
-                    if randomPlr ~= LocalPlayer then
-                        return randomPlr
-                    end
-                end
-                return nil
-            end
-
-            task.spawn(function()
-                while _G.AutoKill do
-                    wait(1)
-
-                    local args = {
+                    local args1 = {
                         "Occupy",
-                        "Hera",
+                        "Poseidon",
                         {
                             Description = "Nyx, the goddess of the night, is a mysterious and awe-inspiring figure cloaked in the shadows of the cosmos. Her presence is both tranquil and unnerving, a living embodiment of the night’s duality: serene yet infinite, comforting yet full of secrets. Her flowing robes shimmer like the starry expanse, dark as the void yet laced with specks of silvery light, as though galaxies themselves are woven into the fabric.",
                             SecondaryColor = Color3.new(0.4901960790157318, 0.5647059082984924, 0.7843137383460999),
@@ -2694,24 +2679,29 @@ GameTab:CreateToggle({
                             PrimaryColor   = Color3.new(0.09803921729326248, 0.13333334028720856, 0.24705882370471954),
                             Gamepass       = false,
                             GamepassId     = 1062037243,
-                            Name           = "Hera"
+                            Name           = "Poseidon"
                         }
                     }
-                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args))
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args1))
 
-                    local target = getRandomPlayer()
-                    if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-                        LocalPlayer.Character:MoveTo(target.Character.HumanoidRootPart.Position)
-
-                        local args = {
-                            "Telekinetic Combo",
-                            LocalPlayer.Character,
-                            target.Character
-                        }
-                        ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args))
+                    local allPlayers = Players:GetPlayers()
+                    local randomPlayer = allPlayers[math.random(1, #allPlayers)]
+                    if randomPlayer.Character and randomPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                        local localChar = Players.LocalPlayer.Character
+                        if localChar and localChar:FindFirstChild("HumanoidRootPart") then
+                            localChar.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
+                        end
                     end
 
-                    local args = {
+                    local args2 = {
+                        "Water Vortex",
+                        Players.LocalPlayer.Character
+                    }
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("AbilityTrigger"):InvokeServer(unpack(args2))
+
+                    wait(2)
+
+                    local args3 = {
                         "Occupy",
                         "Iris",
                         {
@@ -2725,12 +2715,15 @@ GameTab:CreateToggle({
                             Name           = "Iris"
                         }
                     }
-                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args))
+                    ReplicatedStorage:WaitForChild("Events"):WaitForChild("Game"):WaitForChild("Function"):InvokeServer(unpack(args3))
+
+                    wait(0.1)
                 end
             end)
         end
-    end,
+    end
 })
+
 
 
 GameTab:CreateToggle({
@@ -2870,6 +2863,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
