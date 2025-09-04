@@ -2734,51 +2734,17 @@ GameTab:CreateDropdown({
     end,
 })
 
-GameTab:CreateToggle({
-    Name = "Auto Troll",
-    CurrentValue = false,
-    Flag = "Toggle1",
-    Callback = function(Value)
-        local Players = game:GetService("Players")
-        local localPlayer = Players.LocalPlayer
-        local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-        local function onPlayerKill(killer, victim)
-            if killer == localPlayer and victim and victim:IsPlayer() then
-                local message = "EZZZ | OlympusHub"
-                if victim.Name then
-                    message = "Your so bad (" .. victim.Name .. ") | OlympusHub"
-                end
-                game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(message, "All")
-            end
-        end
-
-        if Value then
-            Players.PlayerAdded:Connect(function(player)
-                player.CharacterAdded:Connect(function(character)
-                    if character:FindFirstChild("Humanoid") then
-                        character.Humanoid.Died:Connect(function()
-                            onPlayerKill(localPlayer, player)
-                        end)
-                    end
-                end)
-            end)
-        else
-            Players.PlayerAdded:DisconnectAll()
-        end
-    end,
-})
-
 
 -- EventTab Sections
 EvntTab:CreateSection("Info")
 EvntTab:CreateParagraph({Title = "Olympus Script Developers🛠️", Content = "Kermisha & MotherOfGrass & Moon"})
 EvntTab:CreateParagraph({Title = "Support Discord DMS💬", Content = "kermishaurfavx & grassmother & themoonandsunreuinite"})
-EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Telekenisis Glitch+Mass Earthquake+Auto Kill+Auto Toxic"})
+EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "MINI Update: Telekenisis Glitch+Mass Earthquake+Auto Kill"})
 EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
