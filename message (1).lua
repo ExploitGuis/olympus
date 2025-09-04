@@ -2652,7 +2652,7 @@ GameTab:CreateToggle({
 })
 
 GameTab:CreateDropdown({
-    Name = "Auto Kill (Hera + Hestia)",
+    Name = "Select Player",
     Options = function()
         local players = {}
         for _, player in pairs(game:GetService("Players"):GetPlayers()) do
@@ -2660,7 +2660,7 @@ GameTab:CreateDropdown({
         end
         return players
     end,
-    CurrentOption = {"Option 1"},
+    CurrentOption = {game:GetService("Players").LocalPlayer.Name},
     MultipleOptions = false,
     Flag = "Dropdown1",
     Callback = function(Options)
@@ -2724,6 +2724,7 @@ GameTab:CreateDropdown({
 })
 
 
+
 -- EventTab Sections
 EvntTab:CreateSection("Info")
 EvntTab:CreateParagraph({Title = "Olympus Script Developers🛠️", Content = "Kermisha & MotherOfGrass & Moon"})
@@ -2733,6 +2734,7 @@ EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
 EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
 
 EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+
 
 
 
