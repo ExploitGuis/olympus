@@ -2482,15 +2482,131 @@ SigmaTab:CreateSection("Game")
 
 SigmaTab:CreateLabel("Nothing here yet..", 18638286567)
 
-GameTab:CreateLabel("It's 4 in the morning and i'm too lazy to add stuff here rn ;v", 18638286567)
+DevTab:CreateLabel("Place all WIP scripts here.", 18638286567)
+
+DevTab:CreateButton({
+   Name = "Recieve BTOOLS",
+   Callback = function()
+   local player = game.Players.LocalPlayer
+local backpack = player.Backpack
+
+local function giveBTools()
+    local tools = {
+        "BuildToos",
+        "Hammer",
+        "Select",
+        "Grab"
+    }
+
+    for _, toolName in ipairs(tools) do
+        local tool = game.ReplicatedStorage:WaitForChild("ToolStorage"):FindFirstChild(toolName)
+        if tool then
+            local clonedTool = tool:Clone()
+            clonedTool.Parent = backpack
+        end
+    end
+end
+
+giveBTools()
+
+   end,
+})
+
+DevTab:CreateButton({
+   Name = "Get Cframe",
+   Callback = function()
+   local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local cframeLabel = Instance.new("TextLabel")
+cframeLabel.Size = UDim2.new(0, 300, 0, 50)
+cframeLabel.Position = UDim2.new(0.5, -150, 0, 10)
+cframeLabel.BackgroundTransparency = 0.5
+cframeLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+cframeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+cframeLabel.TextSize = 20
+cframeLabel.Text = "CFrame: Waiting..."
+cframeLabel.Parent = screenGui
+
+local destroyButton = Instance.new("TextButton")
+destroyButton.Size = UDim2.new(0, 200, 0, 50)
+destroyButton.Position = UDim2.new(0.5, -100, 0, 70)
+destroyButton.BackgroundTransparency = 0.5
+destroyButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+destroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+destroyButton.TextSize = 20
+destroyButton.Text = "Destroy GUI"
+destroyButton.Parent = screenGui
+
+local function updateCFrame()
+    while screenGui.Parent do
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local cframe = player.Character.HumanoidRootPart.CFrame
+            cframeLabel.Text = "CFrame: " .. tostring(cframe.Position)
+        end
+        wait(1)
+    end
+end
+
+destroyButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
+updateCFrame()
+   end,
+})
+
+DevTab:CreateButton({
+   Name = "Get Cordinates",
+   Callback = function()
+   local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local coordLabel = Instance.new("TextLabel")
+coordLabel.Size = UDim2.new(0, 250, 0, 50)
+coordLabel.Position = UDim2.new(1, -260, 0, 10)
+coordLabel.BackgroundTransparency = 0.5
+coordLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+coordLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+coordLabel.TextSize = 18
+coordLabel.Text = "Coords: Waiting..."
+coordLabel.TextXAlignment = Enum.TextXAlignment.Left
+coordLabel.TextYAlignment = Enum.TextYAlignment.Top
+coordLabel.Parent = screenGui
+
+local destroyButton = Instance.new("TextButton")
+destroyButton.Size = UDim2.new(0, 250, 0, 60)
+destroyButton.Position = UDim2.new(1, -260, 0, 70)
+destroyButton.BackgroundTransparency = 0.5
+destroyButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+destroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+destroyButton.TextSize = 20
+destroyButton.Text = "Destroy GUI"
+destroyButton.TextWrapped = true
+destroyButton.Parent = screenGui
+
+local function updateCoords()
+    while screenGui.Parent do
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local position = player.Character.HumanoidRootPart.Position
+            coordLabel.Text = string.format("Coords: X: %.2f Y: %.2f Z: %.2f", position.X, position.Y, position.Z)
+        end
+        wait(0.1)
+    end
+end
+
+destroyButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
 
 -- EventTab Sections
 EvntTab:CreateSection("Info")
 EvntTab:CreateParagraph({Title = "Olympus Script Developers🛠️", Content = "Kermisha & MotherOfGrass & Moon"})
-EvntTab:CreateParagraph({Title = "Support Discord DMS💬", Content = "kermishaurfavx & grassmother & themoonandsunreuinite"})
-EvntTab:CreateParagraph({Title = "Script Updates✨", Content = "Release!"})
-EvntTab:CreateParagraph({Title = "Ban Risk⛔", Content = "MEDIUM"})
-EvntTab:CreateParagraph({Title = "Exploit Patches🧪", Content = "0 - yay"})
-EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If you don't wanna get banned from olympus don't use stuff that people can record and report, everything else is safe <3"})
+EvntTab:CreateParagraph({Title = "Important", Content = "This is a test gui designed for the devs of this script."})
+
+
 
 
