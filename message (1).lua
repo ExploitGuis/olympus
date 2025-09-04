@@ -2663,6 +2663,8 @@ local RunService = game:GetService("RunService")
 
 local RunService = game:GetService("RunService")
 
+local RunService = game:GetService("RunService")
+
 GameTab:CreateToggle({
     Name = "AutoKill (WIP)",
     CurrentValue = false,
@@ -2876,6 +2878,7 @@ end)
 for _, player in ipairs(Players:GetPlayers()) do
     applyTag(player)
 end
+
 
 
 
