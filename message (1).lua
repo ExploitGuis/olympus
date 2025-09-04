@@ -2784,7 +2784,6 @@ EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If y
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local LocalPlayer = Players.LocalPlayer
 
 local OWNER_IDS = {
     9405490061,
@@ -2793,32 +2792,31 @@ local OWNER_IDS = {
 
 local OWNER_TAG = "<font color='#800080'>{Owner}</font> "
 
-local function isOwner(player)
+local function isOwner(userId)
     for _, id in ipairs(OWNER_IDS) do
-        if player.UserId == id then
+        if userId == id then
             return true
         end
     end
     return false
 end
 
-local ChatEvents = ReplicatedStorage:WaitForChild("DefaultChatSystemChatEvents", 10)
-if ChatEvents then
-    local OnMessageDoneFiltering = ChatEvents:WaitForChild("OnMessageDoneFiltering")
+local ChatEvents = ReplicatedStorage:WaitForChild("DefaultChatSystemChatEvents")
+local OnMessageDoneFiltering = ChatEvents:WaitForChild("OnMessageDoneFiltering")
 
-    OnMessageDoneFiltering.OnClientEvent:Connect(function(data)
-        local player = Players:GetPlayerByUserId(data.FromSpeakerUserId or 0)
-        if player and isOwner(player) then
-            local message = OWNER_TAG .. data.Message
-            game.StarterGui:SetCore("ChatMakeSystemMessage", {
-                Text = player.Name .. ": " .. message,
-                Color = Color3.fromRGB(255, 255, 255),
-                Font = Enum.Font.SourceSansBold,
-                TextSize = 18
-            })
-        end
-    end)
-end
+OnMessageDoneFiltering.OnClientEvent:Connect(function(data)
+    local userId = data.FromSpeakerUserId
+    if userId and isOwner(userId) then
+        game.StarterGui:SetCore("ChatMakeSystemMessage", {
+            Text = OWNER_TAG .. data.FromSpeaker .. ": " .. data.Message,
+            Color = Color3.fromRGB(255, 255, 255),
+            Font = Enum.Font.SourceSans,
+            TextSize = 18
+        })
+    end
+end)
+
+
 
 
 
