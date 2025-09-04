@@ -2491,7 +2491,7 @@ GameTab:CreateToggle({
                     if TextChatService and TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
                         local general = TextChatService:FindFirstChild("TextChannels") and TextChatService.TextChannels:FindFirstChild("RBXGeneral")
                         if general then
-                            local success, err = pcall(function()
+                            local success = pcall(function()
                                 general:SendAsync(msg)
                             end)
                             if success then ok = true end
@@ -2510,11 +2510,7 @@ GameTab:CreateToggle({
                 while _G.SpamChat do
                     local msg = messages[math.random(1, #messages)]
                     sendMessage(msg)
-                    if string.find(msg, "#") then
-                        _G.SpamChat = false
-                        break
-                    end
-                    task.wait(2)
+                    task.wait(0.05)
                 end
             end)
         end
@@ -2782,6 +2778,7 @@ EvntTab:CreateParagraph({Title = "Note From Hub Developers📝", Content = "If y
 
 
 
+-- DO NOT TOUCH
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -2815,6 +2812,7 @@ OnMessageDoneFiltering.OnClientEvent:Connect(function(data)
         })
     end
 end)
+
 
 
 
