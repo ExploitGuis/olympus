@@ -72,36 +72,39 @@ local Button = Tab:CreateButton({
 })
 
 local Dropdown = Tab:CreateDropdown({
-    Name = "Dropdown Example",
+    Name = "Player List",
     Options = (function()
         local names = {}
-        for _, player in pairs(game:GetService("Players"):GetPlayers()) do
-            table.insert(names, player.Name)
+        for _, plr in ipairs(game:GetService("Players"):GetPlayers()) do
+            table.insert(names, plr.Name)
         end
         return names
     end)(),
-    CurrentOption = {(function()
-        local players = game:GetService("Players"):GetPlayers()
-        return players[1] and players[1].Name or "No Players"
-    end)()},
+    CurrentOption = {},
     MultipleOptions = false,
     Flag = "Dropdown1",
     Callback = function(Options)
-        local selectedPlayerName = Options[1]
-        local player = game:GetService("Players"):FindFirstChild(selectedPlayerName)
-        if player and player.Character and player.Character:FindFirstChild("Head") then
-            local args = {
-                {
-                    NAME = "Bubble",
-                    FUNCTION = "ACTIVE"
-                },
-                CFrame.new(-50.657955169677734, 1.8605097532272339, 142.15611267089844, -0.2921024262905121, 0.43180471658706665, -0.8533586263656616, -0, 0.8922733068466187, 0.45149579644203186, 0.9563870429992676, 0.13188301026821136, -0.2606351971626282),
-                player.Character.Head
-            }
-            for i = 1, 3 do
-                game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("ServerRemote"):FireServer(unpack(args))
-            end
+        local Players = game:GetService("Players")
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local selected = Options[1]
+        local target = Players:FindFirstChild(selected)
+        if target and target.Character and target.Character:FindFirstChild("Head") then
+            task.spawn(function()
+                while true do
+                    local args = {
+                        {
+                            NAME = "Bubble",
+                            FUNCTION = "ACTIVE"
+                        },
+                        CFrame.new(-50.657955169677734, 1.8605097532272339, 142.15611267089844, -0.2921024262905121, 0.43180471658706665, -0.8533586263656616, -0, 0.8922733068466187, 0.45149579644203186, 0.9563870429992676, 0.13188301026821136, -0.2606351971626282),
+                        target.Character:WaitForChild("Head")
+                    }
+                    ReplicatedStorage:WaitForChild("RemoteEvents"):WaitForChild("ServerRemote"):FireServer(unpack(args))
+                    task.wait(1)
+                end
+            end)
         end
     end,
 })
+
 
