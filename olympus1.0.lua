@@ -71,25 +71,24 @@ local Button = Tab:CreateButton({
    end,
 })
 
-local Players = game:GetService("Players")
-
-local function getPlayerNames()
-    local names = {}
-    for _, player in pairs(Players:GetPlayers()) do
-        table.insert(names, player.Name)
-    end
-    return names
-end
-
 local Dropdown = Tab:CreateDropdown({
-    Name = "Select Player",
-    Options = getPlayerNames(),
-    CurrentOption = {getPlayerNames()[1]},
+    Name = "Dropdown Example",
+    Options = (function()
+        local names = {}
+        for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+            table.insert(names, player.Name)
+        end
+        return names
+    end)(),
+    CurrentOption = {(function()
+        local players = game:GetService("Players"):GetPlayers()
+        return players[1] and players[1].Name or "No Players"
+    end)()},
     MultipleOptions = false,
     Flag = "Dropdown1",
-    Callback = function(selectedOptions)
-        local selectedPlayerName = selectedOptions[1]
-        local player = Players:FindFirstChild(selectedPlayerName)
+    Callback = function(Options)
+        local selectedPlayerName = Options[1]
+        local player = game:GetService("Players"):FindFirstChild(selectedPlayerName)
         if player and player.Character and player.Character:FindFirstChild("Head") then
             local args = {
                 {
@@ -106,10 +105,3 @@ local Dropdown = Tab:CreateDropdown({
     end,
 })
 
-Players.PlayerAdded:Connect(function()
-    Dropdown:Refresh(getPlayerNames())
-end)
-
-Players.PlayerRemoving:Connect(function()
-    Dropdown:Refresh(getPlayerNames())
-end)
